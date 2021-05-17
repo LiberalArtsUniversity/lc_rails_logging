@@ -60,6 +60,6 @@ end
 ```
 に共通methodを定義してください。
 
-使いたいcontrollerに
-before_action :logging
-と定義するとcontrollerのhttpリクエストを全てloggingします。
+使いたいcontrollerに 
+`before_action :logging` 
+ と定義するとcontrollerのhttpリクエストを全てloggingします。
