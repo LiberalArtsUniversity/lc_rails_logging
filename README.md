@@ -63,3 +63,6 @@ end
 使いたいcontrollerに 
 `before_action :logging` 
  と定義するとcontrollerのhttpリクエストを全てloggingします。
+
+### 保存データの確認方法
+https://console.cloud.google.com/logs/query;query=logName%3D%22projects%2Fcopy-production%2Flogs%2Fip_address%22%0Alabels.uid%3D%22test_user_2%22;timeRange=2021-05-16T11:41:10.494Z%2F2021-05-16T13:14:10.494Z;cursorTimestamp=2021-05-16T13:13:24.320192273Z?project=copy-production&folder=true&organizationId=true&query=%0A
