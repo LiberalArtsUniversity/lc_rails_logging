@@ -21,15 +21,45 @@ Or install it yourself as:
     $ gem install lc_rails_logging
 
 ## Usage
+0. 導入前のGCP設定
+https://cloud.google.com/logging/docs/setup/ruby
+  - Cloud Logging API を有効にする
+  https://console.cloud.google.com/flows/enableapi?apiid=logging.googleapis.com&_ga=2.182990053.2114394700.1621082467-1171139010.1610083469
+  - サービスアカウントの作成
+  https://console.cloud.google.com/iam-admin/serviceaccounts
+  https://gyazo.com/4306a4d0d5d795d3e087e9733f202046
+  - Logging管理者を選択する
+  https://gyazo.com/f7ed714e4d4f5722b4612871bbbf7783
+  - 秘密鍵の作成
+  https://gyazo.com/a65c2bef7ab7e28a2adbddf0d8f913cf
+  - 導入先プロジェクトへの導入
+  秘密鍵の作成で生成したJSONを設置する
 
-TODO: Write usage instructions here
+1. config/application.rbの設定
+  ```
+    config.google_cloud.logging.project_id = "copy-production" #プロジェクトIDを記入
+    config.google_cloud.logging.keyfile    = "./copy-production-fc964d12e113.json" # 秘密鍵の作成で生成したJSONのpathを指定する
+    config.google_cloud.use_logging = true
+  ```
+2. アプリ名の設定
 
-## Development
+config/initializers/lc_rails_logging.rb
+にアプリ名を設定してください。
+```
+LcRailsLogging.configure do |config|
+  config.app_name = 'libe-works'
+end
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+3. ログの書き込み設定
+app/controllers/application_controller.rb
+```
+def logging
+  LcRailsLogging.send_log(request, current_user)
+end
+```
+に共通methodを定義してください。
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/lc_rails_logging.
+使いたいcontrollerに
+before_action :logging
+と定義するとcontrollerのhttpリクエストを全てloggingします。
