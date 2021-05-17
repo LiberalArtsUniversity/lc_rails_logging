@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'lc_rails_logging'
+gem "lc_rails_logging", git: 'https://github.com/LiberalArtsUniversity/lc_rails_logging.git'
 ```
 
 And then execute:
